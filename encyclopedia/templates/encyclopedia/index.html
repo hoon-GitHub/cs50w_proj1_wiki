@@ -9,7 +9,7 @@
     <h1>All Pages</h1><br>
     <ul>
         {% for entry in entries %}
-            <li><a href="{% url 'encyclopedia:wiki' entry %}">{{ entry }}</a></li>
+            <li><a href="{% url 'encyclopedia:view_entry' entry %}">{{ entry }}</a></li>
         {% endfor %}
     </ul>
 

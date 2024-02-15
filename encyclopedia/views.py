@@ -20,7 +20,7 @@ def index(request):
     })
 
 # Entry display view for the title
-def wiki(request, title):
+def view_entry(request, title):
     entry = util.get_entry(title)
     return render(request, "encyclopedia/wiki.html", {
         "title": title,
@@ -29,24 +29,25 @@ def wiki(request, title):
 
 # Search view
 def search(request):
-    keyword = request.GET.get("q", "")
-    entry = util.get_entry(keyword)
+    if request.method == "POST":
+        keyword = request.POST['q']
+        entry = util.get_entry(keyword)
 
-    # If there is a match, display the entry page
-    if not entry == None:
-        return wiki(request, keyword)
-    
-    # If there is not a match, check if there is any substring match(es)
-    else:
-        matches = []
-        for match in util.list_entries():
-            if keyword.lower() in match.lower():
-                matches.append(match)
-            
-        return render(request, "encyclopedia/search.html", {
-            "keyword": keyword,
-            "matches": matches
-        })
+        # If there is a match, display the entry page
+        if not entry == None:
+            return view_entry(request, keyword)
+        
+        # If there is not a match, check if there is any substring match(es)
+        else:
+            matches = []
+            for match in util.list_entries():
+                if keyword.lower() in match.lower():
+                    matches.append(match)
+                
+            return render(request, "encyclopedia/search.html", {
+                "keyword": keyword,
+                "matches": matches
+            })
 
 # New entry view
 def new_page(request):
@@ -70,7 +71,7 @@ def new_page(request):
             
             # Everything looks good - save and display the new entry page
             util.save_entry(new_title, new_entry)
-            return wiki(request, new_title)
+            return view_entry(request, new_title)
     
     # GET: display an empty form
     return render(request, "encyclopedia/new_page.html", {
@@ -86,7 +87,7 @@ def edit_page(request, title):
         if form.is_valid():
             edit_entry = form.cleaned_data["edit_entry"]
             util.save_entry(title, edit_entry)
-            return wiki(request, title)
+            return view_entry(request, title)
         else:
             error = "Error: Entry not valid. Please try again."
             return render(request, "encyclopedia/edit_page.html", {
@@ -104,7 +105,7 @@ def edit_page(request, title):
         "form": empty_form
     })
 
-# Random button in NAV bar opens random wiki page
+# Random button in NAV bar opens random entry page
 def random(request):
     random_title = secrets.choice(util.list_entries())
-    return wiki(request, random_title)
+    return view_entry(request, random_title)

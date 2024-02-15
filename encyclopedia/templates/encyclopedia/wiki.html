@@ -11,6 +11,7 @@
     {% else %}
         <h2>ERROR: Wiki for {{ title }} does not exist!</h2>
     {% endif %}
-    <br><a href="{% url 'encyclopedia:edit_page' title %}">EDIT</a>
+    <br><br><br><p>** Please click <a href="{% url 'encyclopedia:edit_page' title %}">[here]</a>
+    to edit the contents of this item.</p>
 
 {% endblock %}

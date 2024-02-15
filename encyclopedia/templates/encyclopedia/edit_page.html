@@ -11,6 +11,6 @@
     <form action="{% url 'encyclopedia:edit_page' title %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Save">
+        <input type="submit" value="Save" class="btn btn-primary">
 
 {% endblock %}
