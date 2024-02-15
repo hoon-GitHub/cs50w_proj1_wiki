@@ -14,13 +14,14 @@
                 <h2>CS50W Wiki</h2>
                 <form action="{% url 'encyclopedia:search' %}" methon="get">
                     <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
-                    <input type="submit">
+                    <input type="submit" value="Search">
                 </form>
+                <br>
                 <div>
                     <a href="{% url 'encyclopedia:index' %}">Home</a>
                 </div>
                 <div>
-                    Create New Page
+                    <a href="{% url 'encyclopedia:new_page' %}">Create New Page</a>
                 </div>
                 <div>
                     Random Page
