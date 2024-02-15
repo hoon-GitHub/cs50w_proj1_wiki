@@ -1,3 +1,4 @@
+from markdown2 import Markdown
 import secrets
 from django import forms
 from django.http import HttpResponse
@@ -23,7 +24,7 @@ def wiki(request, title):
     entry = util.get_entry(title)
     return render(request, "encyclopedia/wiki.html", {
         "title": title,
-        "entry": entry
+        "entry": Markdown().convert(entry)
     })
 
 # Search view

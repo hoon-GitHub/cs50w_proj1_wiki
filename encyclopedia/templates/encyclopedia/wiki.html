@@ -6,9 +6,8 @@
 
 {% block body %}
     
-    <h1>Wiki for {{ title }}</h1><br>
     {% if not entry == None %}
-        <div>{{ entry }}</div>
+        <div>{{ entry | safe }}</div>
     {% else %}
         <h2>ERROR: Wiki for {{ title }} does not exist!</h2>
     {% endif %}
