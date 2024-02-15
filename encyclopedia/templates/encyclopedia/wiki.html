@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block body %}
+    
     <h1>Wiki for {{ title }}</h1><br>
     {% if not entry == None %}
         <div>{{ entry }}</div>
     {% else %}
         <h2>ERROR: Wiki for {{ title }} does not exist!</h2>
     {% endif %}
+    <br><a href="{% url 'encyclopedia:edit_page' title %}">EDIT</a>
+
 {% endblock %}
