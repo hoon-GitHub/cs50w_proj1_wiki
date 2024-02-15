@@ -12,7 +12,7 @@
             <h3>No match found with the keyword "{{ keyword }}"</h3> 
         {% else %}
             {% for match in matches %}
-                <li><a href="./wiki/{{ match }}">{{ match }}</a></li>
+                <li><a href="{% url 'encyclopedia:wiki' match %}">{{ match }}</a></li>
             {% endfor %}
         {% endif %}
     </ul>
