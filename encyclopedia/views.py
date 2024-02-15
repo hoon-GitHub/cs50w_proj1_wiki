@@ -1,3 +1,4 @@
+import secrets
 from django import forms
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -77,7 +78,7 @@ def new_page(request):
 
 # Edit page view
 def edit_page(request, title):
-
+    
     # POST: edit/update entry for the title
     if request.method == "POST":
         form = EditEntryForm(request.POST)
@@ -93,8 +94,16 @@ def edit_page(request, title):
                 "form": EditEntryForm()
             })
 
-    # GET: display an edit form for the title
+    # GET: display an edit form for the title with its contents prefilled
+    entry = util.get_entry(title)
+    empty_form = EditEntryForm()
+    empty_form.fields['edit_entry'].initial = entry
     return render(request, "encyclopedia/edit_page.html", {
         "title": title,
-        "form": EditEntryForm()
+        "form": empty_form
     })
+
+# Random button in NAV bar opens random wiki page
+def random(request):
+    random_title = secrets.choice(util.list_entries())
+    return wiki(request, random_title)
