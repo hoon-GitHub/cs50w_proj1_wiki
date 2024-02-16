@@ -44,6 +44,7 @@ def search(request):
                 if keyword.lower() in match.lower():
                     matches.append(match)
                 
+            # Show those partial matches
             return render(request, "encyclopedia/search.html", {
                 "keyword": keyword,
                 "matches": matches
@@ -81,7 +82,7 @@ def new_page(request):
 # Edit page view
 def edit_page(request, title):
     
-    # POST: edit/update entry for the title
+    # POST: submit the edited entry
     if request.method == "POST":
         form = EditEntryForm(request.POST)
         if form.is_valid():
